@@ -2,6 +2,10 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import ThemeToggle from './components/ThemeToggle.vue'
+import LocaleToggle from './components/LocaleToggle.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -11,20 +15,30 @@ import ThemeToggle from './components/ThemeToggle.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <!-- 主题切换按钮 -->
-      <div class="theme-controls">
+      <!-- 控制按钮组 -->
+      <div class="controls">
         <ThemeToggle mode="dropdown" />
+        <LocaleToggle mode="dropdown" />
       </div>
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">{{ t('nav.home') }}</RouterLink>
+        <RouterLink to="/about">{{ t('nav.about') }}</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
 </template>
+
+<style scoped>
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 16px 0;
+}
+</style>
 
 <style scoped>
 header {
