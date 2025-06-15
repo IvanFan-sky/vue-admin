@@ -1,4 +1,6 @@
-import './assets/main.css'
+// 样式导入
+import '@/styles/index.scss'
+import 'uno.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

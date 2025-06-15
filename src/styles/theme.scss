@@ -1,0 +1,74 @@
+// CSS变量定义 - 支持主题切换
+:root {
+  // 主色调
+  --color-primary: #{$primary-color};
+  --color-success: #{$success-color};
+  --color-warning: #{$warning-color};
+  --color-danger: #{$danger-color};
+  --color-info: #{$info-color};
+
+  // 文本颜色
+  --color-text-primary: #{$text-primary};
+  --color-text-regular: #{$text-regular};
+  --color-text-secondary: #{$text-secondary};
+  --color-text-placeholder: #{$text-placeholder};
+
+  // 背景颜色
+  --color-bg: #{$bg-color};
+  --color-bg-page: #{$bg-page};
+  --color-border: #{$border-color};
+
+  // 字体大小
+  --font-size-extra-large: #{$font-size-extra-large};
+  --font-size-large: #{$font-size-large};
+  --font-size-medium: #{$font-size-medium};
+  --font-size-base: #{$font-size-base};
+  --font-size-small: #{$font-size-small};
+  --font-size-extra-small: #{$font-size-extra-small};
+
+  // 间距
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --spacing-xxl: #{$spacing-xxl};
+
+  // 圆角
+  --border-radius-base: #{$border-radius-base};
+  --border-radius-small: #{$border-radius-small};
+  --border-radius-large: #{$border-radius-large};
+  --border-radius-round: #{$border-radius-round};
+  --border-radius-circle: #{$border-radius-circle};
+
+  // 阴影
+  --box-shadow-light: #{$box-shadow-light};
+  --box-shadow-base: #{$box-shadow-base};
+  --box-shadow-dark: #{$box-shadow-dark};
+
+  // 过渡时间
+  --transition-base: #{$transition-base};
+  --transition-fast: #{$transition-fast};
+  --transition-slow: #{$transition-slow};
+}
+
+// 暗色主题
+[data-theme='dark'] {
+  // 文本颜色
+  --color-text-primary: #{$dark-text-primary};
+  --color-text-regular: #{$dark-text-regular};
+  --color-text-secondary: #{$dark-text-secondary};
+
+  // 背景颜色
+  --color-bg: #{$dark-bg-color};
+  --color-bg-page: #{$dark-bg-page};
+  --color-border: #{$dark-border-color};
+}
+
+// 主题切换动画
+* {
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+}
