@@ -8,43 +8,18 @@
 
     <!-- 统计卡片 -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <div class="i-carbon-user text-blue-500"></div>
+      <div class="stat-card" v-for="stat in stats" :key="stat.label">
+        <div class="stat-icon" :style="{ backgroundColor: stat.color + '20', color: stat.color }">
+          <el-icon :size="24">
+            <component :is="stat.icon" />
+          </el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">1,234</div>
-          <div class="stat-label">{{ $t('dashboard.totalUsers') }}</div>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <div class="i-carbon-document text-green-500"></div>
-        </div>
-        <div class="stat-content">
-          <div class="stat-value">5,678</div>
-          <div class="stat-label">{{ $t('dashboard.totalOrders') }}</div>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <div class="i-carbon-currency-dollar text-yellow-500"></div>
-        </div>
-        <div class="stat-content">
-          <div class="stat-value">¥123,456</div>
-          <div class="stat-label">{{ $t('dashboard.totalRevenue') }}</div>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <div class="i-carbon-chart-line text-purple-500"></div>
-        </div>
-        <div class="stat-content">
-          <div class="stat-value">89.5%</div>
-          <div class="stat-label">{{ $t('dashboard.growthRate') }}</div>
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+          <div class="stat-change" :class="stat.trend">
+            {{ stat.change }}
+          </div>
         </div>
       </div>
     </div>
@@ -82,12 +57,17 @@
         <h3 class="section-title">{{ $t('dashboard.recentActivity') }}</h3>
       </div>
       <div class="activity-list">
-        <div class="activity-item" v-for="activity in recentActivities" :key="activity.id">
-          <div class="activity-icon">
-            <div :class="activity.icon"></div>
+        <div class="activity-item" v-for="activity in activities" :key="activity.id">
+          <div
+            class="activity-icon"
+            :style="{ backgroundColor: activity.color + '20', color: activity.color }"
+          >
+            <el-icon :size="16">
+              <component :is="activity.icon" />
+            </el-icon>
           </div>
           <div class="activity-content">
-            <div class="activity-title">{{ activity.title }}</div>
+            <div class="activity-message">{{ activity.message }}</div>
             <div class="activity-time">{{ activity.time }}</div>
           </div>
         </div>
@@ -99,34 +79,79 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { User, ShoppingCart, Money, TrendCharts, Setting } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 
-// 最近活动数据
-const recentActivities = ref([
+// 统计数据
+const stats = ref([
+  {
+    label: t('dashboard.stats.users'),
+    value: '1,234',
+    change: '+12%',
+    trend: 'up',
+    icon: User,
+    color: '#409eff',
+  },
+  {
+    label: t('dashboard.stats.orders'),
+    value: '5,678',
+    change: '+8%',
+    trend: 'up',
+    icon: ShoppingCart,
+    color: '#67c23a',
+  },
+  {
+    label: t('dashboard.stats.revenue'),
+    value: '$12,345',
+    change: '+15%',
+    trend: 'up',
+    icon: Money,
+    color: '#e6a23c',
+  },
+  {
+    label: t('dashboard.stats.conversion'),
+    value: '3.2%',
+    change: '-2%',
+    trend: 'down',
+    icon: TrendCharts,
+    color: '#f56c6c',
+  },
+])
+
+// 最近活动
+const activities = ref([
   {
     id: 1,
-    title: t('dashboard.activity.userLogin'),
+    type: 'user',
+    message: t('dashboard.activity.newUser'),
     time: '2 分钟前',
-    icon: 'i-carbon-user text-blue-500',
+    icon: User,
+    color: '#409eff',
   },
   {
     id: 2,
-    title: t('dashboard.activity.orderCreated'),
+    type: 'order',
+    message: t('dashboard.activity.newOrder'),
     time: '5 分钟前',
-    icon: 'i-carbon-shopping-cart text-green-500',
+    icon: ShoppingCart,
+    color: '#67c23a',
   },
   {
     id: 3,
-    title: t('dashboard.activity.systemUpdate'),
+    type: 'system',
+    message: t('dashboard.activity.systemUpdate'),
     time: '10 分钟前',
-    icon: 'i-carbon-update-now text-orange-500',
+    icon: Setting,
+    color: '#e6a23c',
   },
   {
     id: 4,
-    title: t('dashboard.activity.dataBackup'),
-    time: '1 小时前',
-    icon: 'i-carbon-cloud-backup text-purple-500',
+    type: 'user',
+    message: t('dashboard.activity.userLogin'),
+    time: '15 分钟前',
+    icon: User,
+    color: '#409eff',
   },
 ])
 </script>
@@ -182,11 +207,10 @@ const recentActivities = ref([
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(59, 130, 246, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  flex-shrink: 0;
 }
 
 .stat-content {
@@ -194,8 +218,8 @@ const recentActivities = ref([
 }
 
 .stat-value {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--text-color);
   margin-bottom: 4px;
 }
@@ -203,6 +227,24 @@ const recentActivities = ref([
 .stat-label {
   font-size: 14px;
   color: var(--text-color-secondary);
+  margin-bottom: 4px;
+}
+
+.stat-change {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.stat-change.up {
+  color: #67c23a;
+  background: rgba(103, 194, 58, 0.1);
+}
+
+.stat-change.down {
+  color: #f56c6c;
+  background: rgba(245, 108, 108, 0.1);
 }
 
 .charts-grid {
@@ -289,18 +331,17 @@ const recentActivities = ref([
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: rgba(59, 130, 246, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  flex-shrink: 0;
 }
 
 .activity-content {
   flex: 1;
 }
 
-.activity-title {
+.activity-message {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-color);

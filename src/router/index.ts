@@ -23,7 +23,7 @@ const routes: AppRouteRecordRaw[] = [
       {
         path: '/dashboard',
         name: 'Dashboard',
-        component: () => import('../views/HomeView.vue'),
+        component: () => import('../views/DashboardView.vue'),
         meta: {
           title: 'menu.dashboard',
           icon: 'i-carbon-dashboard',

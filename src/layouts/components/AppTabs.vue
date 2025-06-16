@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, type Component } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import {
+  Monitor,
+  Setting,
+  InfoFilled,
+  User,
+  UserFilled,
+  Close,
+  ArrowDown,
+} from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -12,6 +21,7 @@ interface TabItem {
   path: string
   title: string
   closable: boolean
+  icon?: Component
 }
 
 const tabs = ref<TabItem[]>([
@@ -19,13 +29,14 @@ const tabs = ref<TabItem[]>([
     path: '/dashboard',
     title: t('menu.dashboard'),
     closable: false, // 首页不可关闭
+    icon: Monitor,
   },
 ])
 
 // 当前激活的标签页
 const activeTab = computed(() => route.path)
 
-// 标签页标题映射
+// 标签页标题和图标映射
 const tabTitleMap = computed(() => ({
   '/dashboard': t('menu.dashboard'),
   '/about': t('menu.about'),
@@ -34,20 +45,30 @@ const tabTitleMap = computed(() => ({
   '/system/roles': t('menu.roles'),
 }))
 
+const tabIconMap: Record<string, Component> = computed(() => ({
+  '/dashboard': Monitor,
+  '/about': InfoFilled,
+  '/system': Setting,
+  '/system/users': User,
+  '/system/roles': UserFilled,
+}))
+
 // 添加标签页
 const addTab = (path: string) => {
   // 检查是否已存在
   const existingTab = tabs.value.find((tab) => tab.path === path)
   if (existingTab) return
 
-  // 获取标题
+  // 获取标题和图标
   const title = tabTitleMap.value[path] || path
+  const icon = tabIconMap.value[path]
 
   // 添加新标签页
   tabs.value.push({
     path,
     title,
     closable: path !== '/dashboard', // 首页不可关闭
+    icon,
   })
 }
 
@@ -134,6 +155,9 @@ const hideContextMenu = () => {
           @click="switchTab(tab.path)"
           @contextmenu="handleContextMenu($event, tab.path)"
         >
+          <el-icon v-if="tab.icon" class="tab-icon">
+            <component :is="tab.icon" />
+          </el-icon>
           <span class="tab-title">{{ tab.title }}</span>
           <button
             v-if="tab.closable"
@@ -141,23 +165,34 @@ const hideContextMenu = () => {
             @click="closeTab(tab.path, $event)"
             :title="t('tabs.close')"
           >
-            <i class="i-carbon-close" />
+            <el-icon>
+              <Close />
+            </el-icon>
           </button>
         </div>
       </div>
 
       <!-- 标签页操作按钮 -->
       <div class="tabs-actions">
-        <button
-          class="action-btn"
-          @click="closeOtherTabs(activeTab)"
-          :title="t('tabs.closeOthers')"
-        >
-          <i class="i-carbon-close-outline" />
-        </button>
-        <button class="action-btn" @click="closeAllTabs" :title="t('tabs.closeAll')">
-          <i class="i-carbon-trash-can" />
-        </button>
+        <el-dropdown trigger="click" placement="bottom-end">
+          <button class="action-btn" :title="t('tabs.actions')">
+            <el-icon>
+              <ArrowDown />
+            </el-icon>
+          </button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="closeOtherTabs(activeTab)">
+                <el-icon><Close /></el-icon>
+                {{ t('tabs.closeOthers') }}
+              </el-dropdown-item>
+              <el-dropdown-item @click="closeAllTabs">
+                <el-icon><Close /></el-icon>
+                {{ t('tabs.closeAll') }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
 
@@ -173,15 +208,15 @@ const hideContextMenu = () => {
         @click.stop
       >
         <div class="context-menu-item" @click="closeTab(contextMenuTab, $event)">
-          <i class="i-carbon-close" />
+          <el-icon><Close /></el-icon>
           <span>{{ t('tabs.close') }}</span>
         </div>
         <div class="context-menu-item" @click="closeOtherTabs(contextMenuTab)">
-          <i class="i-carbon-close-outline" />
+          <el-icon><Close /></el-icon>
           <span>{{ t('tabs.closeOthers') }}</span>
         </div>
         <div class="context-menu-item" @click="closeAllTabs">
-          <i class="i-carbon-trash-can" />
+          <el-icon><Close /></el-icon>
           <span>{{ t('tabs.closeAll') }}</span>
         </div>
       </div>
@@ -210,9 +245,15 @@ const hideContextMenu = () => {
   flex: 1;
 }
 
+.tab-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
 .tab-item {
   display: flex;
   align-items: center;
+  gap: 6px;
   gap: 8px;
   padding: 8px 12px;
   border-radius: 6px 6px 0 0;

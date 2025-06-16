@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 import LocaleToggle from '@/components/LocaleToggle.vue'
+import { Menu, User, ArrowDown } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 
@@ -26,7 +27,9 @@ const handleToggleSidebar = () => {
         @click="handleToggleSidebar"
         :title="t('layout.toggleSidebar')"
       >
-        <i class="i-carbon-menu" />
+        <el-icon>
+          <Menu />
+        </el-icon>
       </button>
 
       <!-- Logo -->
@@ -47,10 +50,14 @@ const handleToggleSidebar = () => {
       <!-- 用户信息 -->
       <div class="user-info">
         <div class="user-avatar">
-          <i class="i-carbon-user-avatar" />
+          <el-icon>
+            <User />
+          </el-icon>
         </div>
         <span class="user-name">{{ t('user.admin') }}</span>
-        <i class="i-carbon-chevron-down" />
+        <el-icon class="user-dropdown-icon">
+          <ArrowDown />
+        </el-icon>
       </div>
     </div>
   </header>
@@ -92,7 +99,7 @@ const handleToggleSidebar = () => {
   background: var(--color-background-soft);
 }
 
-.sidebar-toggle i {
+.sidebar-toggle .el-icon {
   font-size: 20px;
 }
 
@@ -150,8 +157,18 @@ const handleToggleSidebar = () => {
   color: var(--color-text-2);
 }
 
-.user-avatar i {
+.user-avatar .el-icon {
   font-size: 18px;
+}
+
+.user-dropdown-icon {
+  font-size: 14px;
+  color: var(--color-text-2);
+  transition: transform 0.2s ease;
+}
+
+.user-info:hover .user-dropdown-icon {
+  transform: rotate(180deg);
 }
 
 .user-name {

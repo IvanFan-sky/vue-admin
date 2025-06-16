@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import {
+  Search,
+  RefreshLeft,
+  Plus,
+  Edit,
+  Delete,
+  User,
+  Check,
+  Close,
+} from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 
@@ -128,11 +138,11 @@ const handleToggleStatus = (user: User) => {
         </div>
         <div class="form-actions">
           <button class="btn btn-primary" @click="handleSearch">
-            <i class="i-carbon-search" />
+            <el-icon><Search /></el-icon>
             搜索
           </button>
           <button class="btn btn-secondary" @click="handleReset">
-            <i class="i-carbon-reset" />
+            <el-icon><RefreshLeft /></el-icon>
             重置
           </button>
         </div>
@@ -142,7 +152,7 @@ const handleToggleStatus = (user: User) => {
     <!-- 操作栏 -->
     <div class="toolbar">
       <button class="btn btn-primary" @click="handleAdd">
-        <i class="i-carbon-add" />
+        <el-icon><Plus /></el-icon>
         添加用户
       </button>
     </div>
@@ -169,6 +179,10 @@ const handleToggleStatus = (user: User) => {
             <td>{{ user.role }}</td>
             <td>
               <span class="status-badge" :class="user.status" @click="handleToggleStatus(user)">
+                <el-icon class="status-icon">
+                  <Check v-if="user.status === 'active'" />
+                  <Close v-else />
+                </el-icon>
                 {{ user.status === 'active' ? '启用' : '禁用' }}
               </span>
             </td>
@@ -176,10 +190,10 @@ const handleToggleStatus = (user: User) => {
             <td>
               <div class="action-buttons">
                 <button class="btn-icon btn-edit" @click="handleEdit(user)" title="编辑">
-                  <i class="i-carbon-edit" />
+                  <el-icon><Edit /></el-icon>
                 </button>
                 <button class="btn-icon btn-delete" @click="handleDelete(user)" title="删除">
-                  <i class="i-carbon-trash-can" />
+                  <el-icon><Delete /></el-icon>
                 </button>
               </div>
             </td>
@@ -313,9 +327,11 @@ const handleToggleStatus = (user: User) => {
 }
 
 .status-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -323,13 +339,17 @@ const handleToggleStatus = (user: User) => {
 }
 
 .status-badge.active {
-  background: var(--color-success-light);
-  color: var(--color-success);
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
 }
 
 .status-badge.inactive {
-  background: var(--color-warning-light);
-  color: var(--color-warning);
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-icon {
+  font-size: 12px;
 }
 
 .action-buttons {

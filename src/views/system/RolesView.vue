@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { Search, RefreshLeft, Plus, Edit, Delete, Check, Close } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 
@@ -163,11 +164,11 @@ const getPermissionName = (code: string) => {
         </div>
         <div class="form-actions">
           <button class="btn btn-primary" @click="handleSearch">
-            <i class="i-carbon-search" />
+            <el-icon><Search /></el-icon>
             搜索
           </button>
           <button class="btn btn-secondary" @click="handleReset">
-            <i class="i-carbon-reset" />
+            <el-icon><RefreshLeft /></el-icon>
             重置
           </button>
         </div>
@@ -177,7 +178,7 @@ const getPermissionName = (code: string) => {
     <!-- 操作栏 -->
     <div class="toolbar">
       <button class="btn btn-primary" @click="handleAdd">
-        <i class="i-carbon-add" />
+        <el-icon><Plus /></el-icon>
         添加角色
       </button>
     </div>
@@ -229,6 +230,7 @@ const getPermissionName = (code: string) => {
                   class="permission-more"
                   @click="handleViewPermissions(role)"
                 >
+                  <el-icon><View /></el-icon>
                   +{{ role.permissions.length - 2 }}
                 </span>
               </div>
@@ -238,6 +240,10 @@ const getPermissionName = (code: string) => {
             </td>
             <td>
               <span class="status-badge" :class="role.status" @click="handleToggleStatus(role)">
+                <el-icon class="status-icon">
+                  <Check v-if="role.status === 'active'" />
+                  <Close v-else />
+                </el-icon>
                 {{ role.status === 'active' ? '启用' : '禁用' }}
               </span>
             </td>
@@ -245,7 +251,7 @@ const getPermissionName = (code: string) => {
             <td>
               <div class="action-buttons">
                 <button class="btn-icon btn-edit" @click="handleEdit(role)" title="编辑">
-                  <i class="i-carbon-edit" />
+                  <el-icon><Edit /></el-icon>
                 </button>
                 <button
                   class="btn-icon btn-delete"
@@ -253,7 +259,7 @@ const getPermissionName = (code: string) => {
                   title="删除"
                   :disabled="role.userCount > 0"
                 >
-                  <i class="i-carbon-trash-can" />
+                  <el-icon><Delete /></el-icon>
                 </button>
               </div>
             </td>
@@ -436,7 +442,9 @@ const getPermissionName = (code: string) => {
 }
 
 .permission-more {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
   padding: 2px 6px;
   background: var(--color-background-mute);
   color: var(--color-text-2);
@@ -457,9 +465,11 @@ const getPermissionName = (code: string) => {
 }
 
 .status-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -467,13 +477,17 @@ const getPermissionName = (code: string) => {
 }
 
 .status-badge.active {
-  background: var(--color-success-light);
-  color: var(--color-success);
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
 }
 
 .status-badge.inactive {
-  background: var(--color-warning-light);
-  color: var(--color-warning);
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-icon {
+  font-size: 12px;
 }
 
 .action-buttons {
