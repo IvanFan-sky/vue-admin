@@ -1,6 +1,62 @@
-import type { MessageSchema } from '@/types/i18n'
+// import type { MessageSchema } from '../types/i18n'
 
-const enUS: MessageSchema = {
+export default {
+  // 应用信息
+  app: {
+    title: 'Vue Admin',
+    description: 'Modern admin dashboard built with Vue 3 + TypeScript + Vite',
+  },
+
+  // 导航菜单
+  nav: {
+    home: 'Home',
+    about: 'About',
+  },
+
+  // 菜单
+  menu: {
+    dashboard: 'Dashboard',
+    system: 'System',
+    users: 'Users',
+    roles: 'Roles',
+    about: 'About',
+  },
+
+  // 布局相关
+  layout: {
+    toggleSidebar: 'Toggle Sidebar',
+  },
+
+  // 用户相关
+  user: {
+    admin: 'Admin',
+    profile: 'Profile',
+    logout: 'Logout',
+  },
+
+  // 标签页
+  tabs: {
+    close: 'Close',
+    closeOthers: 'Close Others',
+    closeAll: 'Close All',
+  },
+
+  // 主题相关
+  theme: {
+    light: 'Light Theme',
+    dark: 'Dark Theme',
+    auto: 'Follow System',
+    toggle: 'Toggle Theme',
+  },
+
+  // 语言相关
+  language: {
+    zh: '中文',
+    en: 'English',
+    toggle: 'Toggle Language',
+  },
+
+  // 通用
   common: {
     confirm: 'Confirm',
     cancel: 'Cancel',
@@ -12,59 +68,21 @@ const enUS: MessageSchema = {
     reset: 'Reset',
     submit: 'Submit',
     back: 'Back',
-    next: 'Next',
-    previous: 'Previous',
     loading: 'Loading...',
     noData: 'No Data',
-    success: 'Success',
-    error: 'Error',
+    success: 'Operation Successful',
+    error: 'Operation Failed',
     warning: 'Warning',
     info: 'Info',
   },
-  nav: {
-    home: 'Home',
-    about: 'About',
-    dashboard: 'Dashboard',
-    user: 'User',
-    system: 'System',
-    settings: 'Settings',
-  },
-  theme: {
-    light: 'Light Theme',
-    dark: 'Dark Theme',
-    auto: 'Follow System',
-    followSystem: 'Follow System Theme',
-    themeSettings: 'Theme Settings',
-    enableTransition: 'Theme Transition',
-    currentStatus: 'Current Status',
-    preview: 'Theme Preview',
-  },
-  user: {
-    login: 'Login',
-    logout: 'Logout',
-    username: 'Username',
-    password: 'Password',
-    rememberMe: 'Remember Me',
-    forgotPassword: 'Forgot Password',
-    profile: 'Profile',
-    settings: 'User Settings',
-  },
-  validation: {
-    required: 'This field is required',
-    email: 'Please enter a valid email address',
-    minLength: 'Minimum length is {min} characters',
-    maxLength: 'Maximum length is {max} characters',
-    pattern: 'Invalid format',
-  },
-  message: {
-    loginSuccess: 'Login successful',
-    loginFailed: 'Login failed',
-    logoutSuccess: 'Logout successful',
-    saveSuccess: 'Save successful',
-    deleteSuccess: 'Delete successful',
-    operationFailed: 'Operation failed',
-    networkError: 'Network error, please try again later',
+
+  // 时间格式
+  datetime: {
+    now: 'Just now',
+    minutesAgo: '{n} minutes ago',
+    hoursAgo: '{n} hours ago',
+    daysAgo: '{n} days ago',
+    monthsAgo: '{n} months ago',
+    yearsAgo: '{n} years ago',
   },
 }
-
-export default enUS
