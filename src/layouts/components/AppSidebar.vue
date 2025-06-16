@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 const menuItems = computed(() => [
   {
     key: 'dashboard',
-    path: '/',
+    path: '/dashboard',
     icon: 'i-carbon-dashboard',
     title: t('menu.dashboard'),
     children: [],

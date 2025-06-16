@@ -40,8 +40,8 @@ const handleToggleSidebar = () => {
     <div class="header-right">
       <!-- 控制按钮组 -->
       <div class="controls">
-        <ThemeToggle mode="button" />
-        <LocaleToggle mode="button" />
+        <ThemeToggle mode="dropdown" />
+        <LocaleToggle />
       </div>
 
       <!-- 用户信息 -->

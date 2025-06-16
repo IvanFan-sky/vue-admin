@@ -53,27 +53,55 @@ export default {
   language: {
     zh: '中文',
     en: 'English',
-    toggle: 'Toggle Language',
+    toggle: 'Switch Language',
   },
 
-  // 通用
+  // 错误页面
+  error: {
+    pageNotFound: 'Page Not Found',
+    pageNotFoundDesc: 'Sorry, the page you are looking for does not exist or has been removed.',
+  },
+
+  // 通用按钮
   common: {
+    backHome: 'Back to Home',
+    goBack: 'Go Back',
     confirm: 'Confirm',
     cancel: 'Cancel',
     save: 'Save',
-    delete: 'Delete',
     edit: 'Edit',
+    delete: 'Delete',
     add: 'Add',
     search: 'Search',
     reset: 'Reset',
     submit: 'Submit',
+    close: 'Close',
     back: 'Back',
     loading: 'Loading...',
     noData: 'No Data',
-    success: 'Operation Successful',
-    error: 'Operation Failed',
-    warning: 'Warning',
-    info: 'Info',
+    operation: 'Operation',
+    status: 'Status',
+    createTime: 'Create Time',
+    updateTime: 'Update Time',
+    remark: 'Remark',
+  },
+
+  dashboard: {
+    welcome: 'Welcome to Admin System',
+    totalUsers: 'Total Users',
+    totalOrders: 'Total Orders',
+    totalRevenue: 'Total Revenue',
+    growthRate: 'Growth Rate',
+    salesTrend: 'Sales Trend',
+    userActivity: 'User Activity',
+    recentActivity: 'Recent Activity',
+    chartPlaceholder: 'Chart data loading...',
+    activity: {
+      userLogin: 'User Login',
+      orderCreated: 'Order Created',
+      systemUpdate: 'System Update',
+      dataBackup: 'Data Backup',
+    },
   },
 
   // 时间格式

@@ -56,24 +56,50 @@ export default {
     toggle: '切换语言',
   },
 
-  // 通用
+  // 错误页面
+  error: {
+    pageNotFound: '页面未找到',
+    pageNotFoundDesc: '抱歉，您访问的页面不存在或已被移除。',
+  },
+
+  // 通用按钮
   common: {
+    backHome: '返回首页',
+    goBack: '返回上一页',
     confirm: '确认',
     cancel: '取消',
     save: '保存',
-    delete: '删除',
     edit: '编辑',
+    delete: '删除',
     add: '添加',
     search: '搜索',
     reset: '重置',
     submit: '提交',
-    back: '返回',
+    close: '关闭',
     loading: '加载中...',
     noData: '暂无数据',
-    success: '操作成功',
-    error: '操作失败',
-    warning: '警告',
-    info: '提示',
+    operation: '操作',
+    status: '状态',
+    createTime: '创建时间',
+    updateTime: '更新时间',
+    remark: '备注',
+  },
+  dashboard: {
+    welcome: '欢迎使用管理系统',
+    totalUsers: '总用户数',
+    totalOrders: '总订单数',
+    totalRevenue: '总收入',
+    growthRate: '增长率',
+    salesTrend: '销售趋势',
+    userActivity: '用户活动',
+    recentActivity: '最近活动',
+    chartPlaceholder: '图表数据加载中...',
+    activity: {
+      userLogin: '用户登录',
+      orderCreated: '创建订单',
+      systemUpdate: '系统更新',
+      dataBackup: '数据备份',
+    },
   },
 
   // 时间格式
