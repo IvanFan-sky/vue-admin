@@ -9,7 +9,7 @@ const router = useRouter()
 
 // 面包屑映射
 const breadcrumbMap = computed(() => ({
-  '/': { title: t('menu.dashboard'), icon: 'i-carbon-home' },
+  '/dashboard': { title: t('menu.dashboard'), icon: 'i-carbon-home' },
   '/about': { title: t('menu.about'), icon: 'i-carbon-information' },
   '/system': { title: t('menu.system'), icon: 'i-carbon-settings' },
   '/system/users': { title: t('menu.users'), icon: 'i-carbon-user' },
@@ -21,15 +21,15 @@ const breadcrumbs = computed(() => {
   const paths = route.path.split('/').filter(Boolean)
   const items = []
 
-  // 添加首页
-  items.push({
-    path: '/',
-    title: breadcrumbMap.value['/']?.title || t('menu.dashboard'),
-    icon: breadcrumbMap.value['/']?.icon,
-  })
-
-  // 如果不是首页，添加当前路径
-  if (route.path !== '/') {
+  // 如果是仪表盘页面，只显示仪表盘
+  if (route.path === '/dashboard' || route.path === '/') {
+    items.push({
+      path: '/dashboard',
+      title: breadcrumbMap.value['/dashboard']?.title || t('menu.dashboard'),
+      icon: breadcrumbMap.value['/dashboard']?.icon,
+    })
+  } else {
+    // 其他页面根据路径层级生成面包屑，不包含仪表盘
     let currentPath = ''
     paths.forEach((path) => {
       currentPath += `/${path}`

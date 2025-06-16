@@ -16,7 +16,7 @@ interface TabItem {
 
 const tabs = ref<TabItem[]>([
   {
-    path: '/',
+    path: '/dashboard',
     title: t('menu.dashboard'),
     closable: false, // 首页不可关闭
   },
@@ -27,7 +27,7 @@ const activeTab = computed(() => route.path)
 
 // 标签页标题映射
 const tabTitleMap = computed(() => ({
-  '/': t('menu.dashboard'),
+  '/dashboard': t('menu.dashboard'),
   '/about': t('menu.about'),
   '/system': t('menu.system'),
   '/system/users': t('menu.users'),
@@ -47,7 +47,7 @@ const addTab = (path: string) => {
   tabs.value.push({
     path,
     title,
-    closable: path !== '/', // 首页不可关闭
+    closable: path !== '/dashboard', // 首页不可关闭
   })
 }
 
@@ -75,7 +75,7 @@ const closeTab = (targetPath: string, event: Event) => {
   if (targetIndex === -1) return
 
   // 不能关闭首页
-  if (targetPath === '/') return
+  if (targetPath === '/dashboard') return
 
   // 移除标签页
   tabs.value.splice(targetIndex, 1)
@@ -89,17 +89,17 @@ const closeTab = (targetPath: string, event: Event) => {
 
 // 关闭其他标签页
 const closeOtherTabs = (keepPath: string) => {
-  tabs.value = tabs.value.filter((tab) => tab.path === '/' || tab.path === keepPath)
-  if (route.path !== keepPath && keepPath !== '/') {
+  tabs.value = tabs.value.filter((tab) => tab.path === '/dashboard' || tab.path === keepPath)
+  if (route.path !== keepPath && keepPath !== '/dashboard') {
     router.push(keepPath)
   }
 }
 
 // 关闭所有标签页（除首页）
 const closeAllTabs = () => {
-  tabs.value = tabs.value.filter((tab) => tab.path === '/')
-  if (route.path !== '/') {
-    router.push('/')
+  tabs.value = tabs.value.filter((tab) => tab.path === '/dashboard')
+  if (route.path !== '/dashboard') {
+    router.push('/dashboard')
   }
 }
 
